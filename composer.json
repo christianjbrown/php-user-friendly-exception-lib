@@ -1,4 +1,5 @@
 {
+    "name": "christianjbrown/user-friendly-exception",
     "require": {
         "php": "^8.2"
     },
