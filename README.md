@@ -34,7 +34,7 @@ use RuntimeException;
 use ChristianBrown\UserFriendlyException\UserFriendlyException;
 
 try {
-	// ...
+  // ...
   // Technical issue here
   // ...
 } catch (RuntimeException $e) {
@@ -65,7 +65,7 @@ return $response;
 
 ## Dependencies
 
-This library has no dependencies.
+This library has *no dependencies*.
 
 
 During development, this library uses:
