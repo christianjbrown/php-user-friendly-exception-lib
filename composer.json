@@ -25,6 +25,9 @@
             "clear && ./bin/php-cs-fix-diff"
         ]
     },
+    "config": {
+        "bin-dir": "bin"
+    },
     "autoload": {
         "psr-4": {
             "ChristianBrown\\UserFriendlyException\\": "src/"
