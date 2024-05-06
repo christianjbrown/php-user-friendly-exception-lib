@@ -28,8 +28,8 @@ composer require christianjbrown/php-user-friendly-exception-lib
 Throwing the exception after catching a non-user-friendly exception.
 
 ```php
-use RuntimeException;
 use ChristianBrown\UserFriendlyException\UserFriendlyException;
+use RuntimeException;
 
 try {
   // ...
