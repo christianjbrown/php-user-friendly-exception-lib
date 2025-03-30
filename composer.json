@@ -2,7 +2,7 @@
     "name": "christianjbrown/php-user-friendly-exception-lib",
     "type": "library",
     "require": {
-        "php": "~8.3"
+        "php": "^8.3"
     },
     "require-dev": {
         "christianjbrown/php-code-quality-scripts": "dev-main",
