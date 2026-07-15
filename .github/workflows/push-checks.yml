@@ -1,5 +1,7 @@
 name: "On-push checks"
 on:
+  push:
+    branches: ["main"]
   pull_request:
     types: ["opened", "synchronize"]
     branches: ["main"]
@@ -13,21 +15,34 @@ on:
 jobs:
   on-push-checks:
     name: "On-push checks"
-    runs-on: "ubuntu-20.04"
+    runs-on: "ubuntu-latest"
 
     steps:
       - name: "Checkout code"
         uses: "actions/checkout@v4"
 
+      - name: "Setup PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "8.3"
+          coverage: "xdebug"
+
+      # The dev dependency `christianjbrown/php-code-quality-scripts` is a private
+      # `dev-main` package on GitHub. Composer needs credentials to fetch it; supply a
+      # token with read access via the COMPOSER_AUTH secret.
+      - name: "Configure Composer auth"
+        run: 'echo "COMPOSER_AUTH=$COMPOSER_AUTH" >> "$GITHUB_ENV"'
+        env:
+          COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+
       - name: "Install dependencies"
-        env:
-          COMPOSER_AUTH: '{"github-oauth":{"github.com":"${{ secrets.COMPOSER_GITHUB_TOKEN }}"}}'
-        run: "composer update"
+        run: "composer install --prefer-dist --no-progress"
 
-      - name: "Run PHPCS checks"
-        run: "composer check-style"
+      - name: "Check code style"
+        run: "./bin/php-cs ./src ./tests"
 
-      - name: "Run PHPUnit tests"
-        env:
-          XDEBUG_MODE: "coverage"
-        run: "./bin/phpunit"
+      - name: "Static analysis"
+        run: "./bin/phpstan analyse --no-progress"
+
+      - name: "Run tests with coverage"
+        run: "XDEBUG_MODE=coverage php -d memory_limit=-1 ./bin/phpunit"

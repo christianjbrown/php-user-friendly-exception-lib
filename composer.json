@@ -1,16 +1,28 @@
 {
     "name": "christianjbrown/php-user-friendly-exception-lib",
+    "description": "A tiny PHP library providing a UserFriendlyException whose message is safe to display directly to end users.",
     "type": "library",
+    "license": "MIT",
+    "keywords": ["exception", "error-handling", "user-friendly"],
+    "authors": [
+        {
+            "name": "Christian Brown"
+        }
+    ],
     "require": {
         "php": "^8.3"
     },
     "require-dev": {
         "christianjbrown/php-code-quality-scripts": "dev-main",
+        "phpstan/phpstan": "^2.0",
         "phpunit/phpunit": "^12.0"
     },
     "scripts": {
         "test": [
-            "clear && XDEBUG_MODE=coverage ./bin/phpunit --process-isolation && open ./.phpunit.cache/code-coverage-html/index.html"
+            "clear && XDEBUG_MODE=coverage php -d memory_limit=-1 ./bin/phpunit && open ./.phpunit.cache/code-coverage-html/index.html"
+        ],
+        "stan": [
+            "clear && ./bin/phpstan analyse"
         ],
         "check-style": [
             "clear && ./bin/php-cs ./src ./tests"
@@ -33,10 +45,16 @@
             "ChristianBrown\\UserFriendlyException\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "ChristianBrown\\UserFriendlyException\\Tests\\": "tests/"
+        }
+    },
     "repositories": [
         {
             "type": "github",
             "url": "git@github.com:christianjbrown/php-code-quality-scripts.git"
         }
-    ]
+    ],
+    "minimum-stability": "dev"
 }
